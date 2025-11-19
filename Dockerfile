@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM docker.io/alpine:3.18
 
 # 安裝 SSL 憑證，讓 PocketBase 能連 HTTPS
 RUN apk add --no-cache ca-certificates
