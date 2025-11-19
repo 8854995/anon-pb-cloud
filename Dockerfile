@@ -1,18 +1,9 @@
-FROM docker.io/alpine:3.18
+# 用 GitHub Container Registry 上的 PocketBase 映像
+FROM ghcr.io/kdpuvvadi/pocketbase:latest
 
-# 工作目錄
-WORKDIR /app
+# 這個映像的工作目錄是 /usr/src/app
+WORKDIR /usr/src/app
 
-# 把 Linux 版 pocketbase 執行檔 放進 image
-COPY pocketbase /app/pocketbase
-
-# 只帶 schema（遷移檔），不要帶整個 pb_data
-COPY pb_migrations /app/pb_migrations
-
-# 確保 binary 可執行
-RUN chmod +x /app/pocketbase
-
-EXPOSE 8080
-
-# 啟動 pocketbase，對外聽 8080 port
-CMD ["./pocketbase", "serve", "--http=0.0.0.0:8080"]
+# 把你本機的資料跟 migrations 打包進映像裡
+COPY pb_data ./pb_data
+COPY pb_migrations ./pb_migrations
